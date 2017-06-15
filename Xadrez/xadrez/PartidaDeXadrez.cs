@@ -30,29 +30,34 @@ namespace xadrez
             colocarPecas();
         }
 
-
         public void executaMovimento(Posicao origem, Posicao destino)
         {
-            Peca p = tab.peca(origem);
-            Peca pecaCapturada = tab.peca(destino);
+            Peca aux_origem = tab.peca(origem);
+            Peca aux_destino = tab.peca(destino);
 
-            if (pecaCapturada != null)
+            if (tab.peca(destino) == null)
             {
-                pecasCapturadas.Add(pecaCapturada);
-                tab.ColocarPeca(p, destino);
+                tab.retirarPeca(origem);
+                tab.ColocarPeca(aux_origem, destino);
             }
             else
             {
-                if(p.cor != pecaCapturada.cor)
+                if (aux_origem.cor == aux_destino.cor)
                 {
-                    pecasCapturadas.Add(pecaCapturada);
-                    tab.ColocarPeca(p, destino);
+                    throw new TabuleiroException("Você não pode matar uma peça aliada");
                 }
-                
+                else
+                {
+
+                    pecasCapturadas.Add(tab.peca(destino));
+                    tab.retirarPeca(destino);
+                    tab.retirarPeca(origem);
+                    tab.ColocarPeca(aux_origem, destino);
+                }
             }
 
-
         }
+
 
         public HashSet<Peca> capturadas(Cor cor)
         {
