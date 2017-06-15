@@ -30,10 +30,11 @@ namespace xadrez
             colocarPecas();
         }
 
+
         public void executaMovimento(Posicao origem, Posicao destino)
         {
-            Peca p = tab.retirarPeca(origem);
-            Peca pecaCapturada = tab.retirarPeca(destino);
+            Peca p = tab.peca(origem);
+            Peca pecaCapturada = tab.peca(destino);
 
             if (pecaCapturada != null)
             {
@@ -42,12 +43,16 @@ namespace xadrez
             }
             else
             {
-                tab.ColocarPeca(p, destino);
+                if(p.cor != pecaCapturada.cor)
+                {
+                    pecasCapturadas.Add(pecaCapturada);
+                    tab.ColocarPeca(p, destino);
+                }
+                
             }
-            
-             
-        }
 
+
+        }
 
         public HashSet<Peca> capturadas(Cor cor)
         {

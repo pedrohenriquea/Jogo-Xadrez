@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using tabuleiro;
 using xadrez;
@@ -60,8 +61,15 @@ namespace Xadrez
                 Posicao destino = PosicaoXadrez.lerPosicaoXadrez().toPosicao();
 
                 // O método "executaMovimento" pega a peça que o usuário digitou em "Origem" e coloca em "Destino". Caso haja alguma peça no destino, ela é adicionada no conjunto de "pecasCapturadas"
-                p.executaMovimento(origem,destino);
-
+                try
+                {
+                    p.executaMovimento(origem, destino);
+                }
+                catch (TabuleiroException e)
+                {
+                    Console.WriteLine(e.Message);
+                    Thread.Sleep(1500);
+                }
 
 
             }
